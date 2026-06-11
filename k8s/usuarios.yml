@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: usuarios-deployment
+  labels:
+    app: ms-usuarios
+spec:
+  replicas: 1 # Puedes subirlo a 2 más adelante para alta disponibilidad
+  selector:
+    matchLabels:
+      app: ms-usuarios
+  template:
+    metadata:
+      labels:
+        app: ms-usuarios
+    spec:
+      containers:
+      - name: ms-usuarios
+        # Reemplazado dinámicamente por GitHub Actions
+        image: 782424855823.dkr.ecr.us-east-1.amazonaws.com/ms-usuarios:${IMAGE_TAG}
+        ports:
+        - containerPort: 8085
+        env:
+        # Inyectamos la URL apuntando al servicio DNS interno de la BD en K8s
+        - name: DB_URL
+          value: "jdbc:postgresql://sanosdb-service:5432/db_usuarios"
+        - name: DB_USERNAME
+          value: "admin"
+        - name: DB_PASSWORD
+          value: "admin"
+        # Configuración para cuando montemos Eureka más adelante
+        - name: EUREKA_URL
+          value: "http://eureka-service:8761/eureka/"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: usuarios-service
+spec:
+  type: ClusterIP # AISLADO: Solo accesible dentro del cluster
+  selector:
+    app: ms-usuarios
+  ports:
+    - protocol: TCP
+      port: 8085
+      targetPort: 8085

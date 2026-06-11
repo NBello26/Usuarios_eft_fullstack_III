@@ -5,10 +5,12 @@ import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 
 public record UsuarioRequestDTO(
 
+        // DTO para crear un nuevo usuario, incluye validaciones básicas
         @NotBlank(message = "El nombre es obligatorio")
         @Size(min = 3, max = 50)
         String nombre,
@@ -37,5 +39,9 @@ public record UsuarioRequestDTO(
         String ocupacion,
 
         @NotBlank(message = "La dirección es obligatoria")
-        String direccion
+        String direccion,
+
+        @NotBlank(message = "El tipo de usuario es obligatorio")
+        @Pattern(regexp = "^(admin|cliente)$", message = "El rol solo puede ser 'admin' o 'cliente'")
+        String tipoUsuario
 ) {}
