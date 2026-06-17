@@ -22,7 +22,7 @@ spec:
         - containerPort: 8085
         env:
         - name: DB_URL
-          value: "jdbc:postgresql://sanosdb-service:5432/db_mascotas"
+          value: "jdbc:postgresql://sanosdb-service:5432/db_usuarios"
         - name: DB_USERNAME
           valueFrom:
             secretKeyRef:
