@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ms-usuarios
 spec:
-  replicas: 1 # Puedes subirlo a 2 más adelante para alta disponibilidad
+  replicas: 2
   selector:
     matchLabels:
       app: ms-usuarios
