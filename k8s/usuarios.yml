@@ -5,7 +5,7 @@ metadata:
   labels:
     app: ms-usuarios
 spec:
-  replicas: 2
+  replicas: 2 #Dos por alta disponibilidad
   selector:
     matchLabels:
       app: ms-usuarios
@@ -37,7 +37,7 @@ spec:
           value: "http://eureka-service:8761/eureka/"
         - name: SPRING_DATA_REDIS_HOST
           value: "redis-service"
-        - name: SPRING_DATA_REDIS_PORT
+        - name: SPRING_DATA_REDIS_PORT 
           value: "6379"
 ---
 apiVersion: v1
