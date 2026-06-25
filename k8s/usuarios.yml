@@ -16,8 +16,7 @@ spec:
     spec:
       containers:
       - name: ms-usuarios
-        # Reemplazado dinámicamente por GitHub Actions
-        image: 085985863834.dkr.ecr.us-east-1.amazonaws.com/ms-usuarios:${IMAGE_TAG}
+        image: 871767013014.dkr.ecr.us-east-1.amazonaws.com/ms-usuarios:${IMAGE_TAG}
         ports:
         - containerPort: 8085
         env:
@@ -33,7 +32,7 @@ spec:
             secretKeyRef:
               name: app-secrets
               key: db-password
-        # Configuración para cuando montemos Eureka más adelante
+
         - name: EUREKA_URL
           value: "http://eureka-service:8761/eureka/"
         - name: SPRING_DATA_REDIS_HOST
@@ -46,7 +45,7 @@ kind: Service
 metadata:
   name: usuarios-service
 spec:
-  type: ClusterIP # AISLADO: Solo accesible dentro del cluster
+  type: ClusterIP 
   selector:
     app: ms-usuarios
   ports:
